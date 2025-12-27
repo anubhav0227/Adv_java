@@ -1,0 +1,60 @@
+ // Edit book page
+    @GetMapping("/edit/{id}")
+    public String editBook(@PathVariable long id, Model model) {
+        Book book = bookRepository.findById(id).orElse(null);
+        model.addAttribute("book", book);
+        return "update-book";
+    }
+
+    // Update book
+    @PostMapping("/update")
+    public String updateBook(Book book) {
+        bookRepository.save(book);
+        return "redirect:/";
+    }
+
+    // Delete book
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable long id) {
+        bookRepository.deleteById(id);
+        return "redirect:/";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Update Book</h2>
+
+<form action="/update" method="post">
+
+    Book ID:
+    <input type="text" name="bookId" th:value="${book.bookId}" readonly><br><br>
+
+    Book Name:
+    <input type="text" name="bookName" th:value="${book.bookName}"><br><br>
+
+    Author:
+    <input type="text" name="author" th:value="${book.author}"><br><br>
+
+    Price:
+    <input type="number" name="price" th:value="${book.price}"><br><br>
+
+    <input type="submit" value="Update Book">
+</form>
+
+<a href="/">Back</a>
+
+</body>
+</html>
